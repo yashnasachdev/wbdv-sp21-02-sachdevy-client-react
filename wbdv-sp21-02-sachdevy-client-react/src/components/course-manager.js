@@ -47,7 +47,7 @@ class CourseManager extends React.Component {
     //}
     const newCourse = {
         title: this.state.title,
-        owner: "Squishy",
+        owner: "Yashna",
         lastModified: "Today"
     }
     courseService.createCourse(newCourse)
