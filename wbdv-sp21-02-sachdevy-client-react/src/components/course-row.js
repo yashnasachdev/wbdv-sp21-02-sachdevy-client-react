@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 const CourseRow = (
     {
@@ -12,7 +12,7 @@ const CourseRow = (
     }) => {
     const [editing, setEditing] = useState(false)
     const [newTitle, setNewTitle] = useState(title)
-
+    const {layout} = useParams()
     const saveTitle = () => {
         setEditing(false)
         const newCourse = {
@@ -27,7 +27,7 @@ const CourseRow = (
         <td>
             {
                 !editing &&
-                <Link to="/courses/editor">
+                <Link to={`/courses/${layout}/editor/${course._id}`}>
                     {title}
                 </Link>
             }
@@ -39,8 +39,8 @@ const CourseRow = (
                     className="form-control"/>
             }
         </td>
-        <td scope="col" className="d-none d-sm-table-cell">{owner}</td>
-        <td scope="col" className="d-none d-md-table-cell">{lastModified}</td>
+        <td>{owner}</td>
+        <td>{lastModified}</td>
         <td>
             <i onClick={() => deleteCourse(course)} className="fas fa-trash"></i>
             {!editing && <i onClick={() => setEditing(true)} className="fas fa-edit"></i>}

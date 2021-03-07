@@ -10,7 +10,9 @@ class CourseManager extends React.Component {
     courses: [],
     qwe: 123,
     sdf: 456,
-    title:''
+    title:'',
+    owner:'me',
+    date:'Never'
   }
 
   updateCourse = (course) => {
@@ -39,16 +41,11 @@ class CourseManager extends React.Component {
     findAllCourses()
         .then(courses => this.setState({courses}))
 
-  addCourse = (e) => {
-    //const newCourse = {
-      //title: $("#titleFld").val(),
-      //owner: "New Owner",
-      //lastModified: "Never"
-    //}
+  addCourse = () => {
     const newCourse = {
-        title: this.state.title,
-        owner: "Yashna",
-        lastModified: "Today"
+      title: "New Course",
+      owner: "New Owner",
+      lastModified: "Never"
     }
     courseService.createCourse(newCourse)
         .then(course => this.setState(
@@ -96,24 +93,6 @@ class CourseManager extends React.Component {
         })
   }
 
-  setTitle = (e) => {
-        this.setState({
-            title: e.target.value
-        })
-  }
-
-  setOwner = (e) => {
-        this.setState({
-                    owner: e.target.value
-                })
-  }
-
-  setDate = (e) => {
-          this.setState({
-                      date: e.target.value
-                  })
-    }
-
   render() {
     return(
       <div>
@@ -121,23 +100,23 @@ class CourseManager extends React.Component {
             <i className="fas fa-2x fa-home float-right"></i>
           </Link>
         <h1>Course Manager</h1>
-
-        <input class="form-control"
-        placeholder="Title" onChange={e=> this.setTitle(e)}/>
-        <button class="btn btn-danger" onClick={this.addCourse}><i class="fas fa-plus-circle"></i></button>
-
-
+        <tr class ="wbdv-form">
+            <th><input class="form-control"
+            placeholder="Course Title" onChange={e=> this.setTitle(e)}/>Title</th>
+            <th><input class="form-control"
+                    placeholder="Owner" onChange={e=> this.setOwner(e)}/>Owner</th>
+            <th><input class="form-control" type="date"
+                    placeholder="Last Modified" onChange={e=> this.setDate(e)}/>Last Modified</th>
+            <th><button class="btn-success" onClick={this.addCourse}><i class="fas fa-plus-circle"></i></button></th>
+        </tr>
         <Route path="/courses/table">
           <CourseTable
               updateCourse={this.updateCourse}
               deleteCourse={this.deleteCourse}
               courses={this.state.courses}/>
-
         </Route>
-
         <Route path="/courses/grid">
           <CourseGrid
-              updateCourse={this.updateCourse}
               deleteCourse={this.deleteCourse}
               courses={this.state.courses}/>
         </Route>
@@ -147,9 +126,20 @@ class CourseManager extends React.Component {
           {/*<Route path="/courses/editor"*/}
           {/*       render={(props) => <CourseEditor props={props}/>}>*/}
           {/*</Route>*/}
-          <Route path="/courses/editor"
+          <Route path={[
+              "/courses/:layout/editor/:courseId",
+              "/courses/:layout/editor/:courseId/:moduleId",
+              "/courses/:layout/editor/:courseId/:moduleId/:lessonId",
+              "/courses/:layout/editor/:courseId/:moduleId/:lessonId/:topicId"
+              ]}
+                 exact={true}
                  render={(props) => <CourseEditor {...props}/>}>
           </Route>
+
+          {/*<Route path="/courses/editor/:courseId/:moduleId/:lessonId"*/}
+          {/*       render={(props) => <CourseEditor {...props}/>}>*/}
+          {/*</Route>*/}
+
       </div>
     )
   }
