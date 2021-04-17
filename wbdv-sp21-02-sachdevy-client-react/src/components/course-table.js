@@ -25,13 +25,15 @@ export default class CourseTable
             <th>Title</th>
             <th scope="col" className="d-none d-sm-table-cell">Owner</th>
             <th scope="col" className="d-none d-md-table-cell">Last Modified</th>
+            <th scope="col" className="d-none d-md-table-cell">Quizzes</th>
             <th></th>
           </tr>
           {
             this.props.courses.map((course, ndx) =>
               <CourseRow
-                  updateCourse={this.props.updateCourse}
+                updateCourse={this.props.updateCourse}
                 deleteCourse={this.props.deleteCourse}
+                findCourseById={this.props.findCourseById}
                 key={ndx}
                 course={course}
                 title={course.title}
