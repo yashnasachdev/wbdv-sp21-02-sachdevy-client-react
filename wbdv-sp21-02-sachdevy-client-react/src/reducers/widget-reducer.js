@@ -2,6 +2,7 @@ const initialState = {
     widgets: []
 }
 
+
 const widgetReducer = (state=initialState, action) =>{
     switch(action.type){
         case "CREATE_WIDGET":
